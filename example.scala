@@ -6,6 +6,12 @@ import java.util.Locale
 
 case class Example(id: Long, lang: Locale = Locale.ENGLISH)
 
+case class BlogPost(id: Int, createdTimeEpoch: Long, published: Boolean)
+
+case class BlogPostText(blogId: Int, lang: java.util.Locale, postText: String)
+
+
+/** run me from the shell via: val s = new example.ExampleLocaleSerialization(); s.show */
 class ExampleLocaleSerialization {
 
 	implicit object LocaleFormat extends JsonFormat[Locale] {
@@ -20,6 +26,14 @@ class ExampleLocaleSerialization {
 		implicit val conversion = jsonFormat2(Example)
 		val obj = Example(0)
 		println(obj.toJson.prettyPrint)
+
+		implicit val blogPostFormat = jsonFormat3(BlogPostText)
+		val blogpostgerman = BlogPostText(0, new java.util.Locale("de"), "Ich kann nicht versteht!")
+		println(blogpostgerman.toJson)
+
+		val res = """{"blogId":0,"lang":"de","postText":"Ich kann nicht versteht!"}""".parseJson.convertTo[BlogPostText]
+		println(res)
+		
 	}
 
 }
