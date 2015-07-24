@@ -28,10 +28,10 @@ class ExampleLocaleSerialization {
 		println(obj.toJson.prettyPrint)
 
 		implicit val blogPostFormat = jsonFormat3(BlogPostText)
-		val blogpostgerman = BlogPostText(0, new java.util.Locale("de"), "Ich kann nicht versteht!")
+		val blogpostgerman = BlogPostText(0, new java.util.Locale("de"), "Ich kann nicht verstehen!")
 		println(blogpostgerman.toJson)
 
-		val res = """{"blogId":0,"lang":"de","postText":"Ich kann nicht versteht!"}""".parseJson.convertTo[BlogPostText]
+		val res = """{"blogId":0,"lang":"de","postText":"Ich kann nicht verstehen"}""".parseJson.convertTo[BlogPostText]
 		println(res)
 		
 	}
